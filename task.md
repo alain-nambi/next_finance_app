@@ -1,4 +1,4 @@
-## Initialize Application with Bun
+### Initialize Application with Bun
 ```bash
 bunx create-next-app@latest finance_app
 
@@ -9,4 +9,10 @@ bunx create-next-app@latest finance_app
 √ Would you like to use App Router? (recommended) ...Yes
 √ Would you like to use Turbopack for `next dev`? ... Yes
 √ Would you like to customize the import alias (`@/*` by default)? ... No
+```
+
+
+### Install ShadCN UI with Next.js
+```bash
+bunx shadcn@latest init
 ```
