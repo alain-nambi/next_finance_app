@@ -1,3 +1,8 @@
+## 🔗 Liens utiles
+
+- [📺 Vidéo contenant la suivi du tutoriel](https://www.youtube.com/watch?v=N_uNKAus0II)
+
+
 ### Initialize Application with Bun
 ```bash
 bunx create-next-app@latest finance_app
@@ -16,3 +21,6 @@ bunx create-next-app@latest finance_app
 ```bash
 bunx shadcn@latest init
 ```
+
+- Install button component with `bunx shadcn@latest add button`
+- 
