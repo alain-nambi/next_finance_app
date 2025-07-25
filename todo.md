@@ -34,3 +34,5 @@ bunx shadcn@latest init
 - [x] Add middleware for clerk
 - [x] Use sign-in and sign-up components from Clerk
 - [x] Create a protected route in middleware
+- [x] Redesign the UI of sign-in pages
+- [ ] Add loader if Clerk's page is not ready
