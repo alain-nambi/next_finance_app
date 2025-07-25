@@ -30,6 +30,7 @@ bunx shadcn@latest init
 - [x] Install and configure Clerk using `bun add @clerk/nextjs`
 - [x] [Configure Clerk](https://clerk.com/docs/quickstarts/nextjs)
 - [x] Add .env.local file to store your Clerk API keys
-- [ ] Add Clerk Provider to `app/layout.tsx`
-- [ ] Add middleware for clerk
-- [ ] Use sign-in and sign-up components from Clerk
+- [x] Add Clerk Provider to `app/layout.tsx`
+- [x] Add middleware for clerk
+- [x] Use sign-in and sign-up components from Clerk
+- [x] Create a protected route in middleware
