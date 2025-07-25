@@ -35,4 +35,6 @@ bunx shadcn@latest init
 - [x] Use sign-in and sign-up components from Clerk
 - [x] Create a protected route in middleware
 - [x] Redesign the UI of sign-in pages
-- [ ] Add loader if Clerk's page is not ready
+- [x] Add loader if Clerk's page is not ready
+- [x] Make signin design more beautiful
+- [x] Set #10c484 color as main color palette
