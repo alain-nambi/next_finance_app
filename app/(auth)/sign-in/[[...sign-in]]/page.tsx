@@ -1,5 +1,5 @@
 import { SignIn, ClerkLoaded, ClerkLoading } from '@clerk/nextjs';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Shield, Lock, Target, TrendingUp, BarChart3, Zap, Signal, CheckCircle, ShieldCheck } from 'lucide-react';
 
 export default function Page() {
   return (
@@ -10,18 +10,19 @@ export default function Page() {
         {/* Welcome Text */}
         <div className="text-center space-y-4 max-w-md w-full">
           <div className="flex justify-center mb-2">
-            {/* Optional: Add your logo here */}
-            <div className="w-12 h-12 rounded-lg bg-[#10c484] flex items-center justify-center">
+            {/* Logo Badge */}
+            <div className="w-12 h-12 rounded-lg bg-[#10c484] flex items-center justify-center shadow-md">
               <span className="text-white font-bold text-xl">$</span>
             </div>
           </div>
           
-          <h1 className="font-bold text-3xl text-gray-900">
+          <h1 className="font-bold text-3xl text-gray-900 flex items-center justify-center gap-2">
             Welcome to <span className="text-[#10c484]">FinTrack</span>
+            <Target className="w-6 h-6 text-[#10c484]" />
           </h1>
           
-          <p className="text-base text-gray-600">
-            Sign in to access your financial dashboard and manage your investments securely.
+          <p className="text-base text-gray-600 flex items-center justify-center gap-2">
+            Sign in securely to manage your investments and track financial goals.
           </p>
         </div>
 
@@ -41,14 +42,7 @@ export default function Page() {
                   borderRadius: '8px',
                 },
                 elements: {
-                  formButtonPrimary:
-                    'bg-[#10c484] hover:bg-[#0eb078] active:bg-[#0da770] text-white font-medium shadow-md transition-all duration-200',
-                  footerActionLink: 'text-[#10c484] hover:underline font-medium',
-                  card: 'shadow-lg border border-gray-100 rounded-xl',
-                  headerTitle: 'text-gray-900 font-semibold',
-                  headerSubtitle: 'text-gray-600',
-                  socialButtonsBlockButton:
-                    'border border-gray-300 hover:bg-gray-50 transition-colors',
+                  footerActionLink: 'text-[#10c484] hover:underline',
                 },
               }}
             />
@@ -60,12 +54,17 @@ export default function Page() {
           </ClerkLoading>
         </div>
 
-        {/* Security Badge */}
-        <div className="mt-8 flex items-center justify-center text-sm text-gray-500">
-          <svg className="w-4 h-4 mr-2 text-[#10c484]" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-          </svg>
-          Bank-level encryption • SOC 2 compliant
+        {/* Security Badge with Icons */}
+        <div className="mt-8 flex items-center justify-center text-sm text-gray-500 gap-4 flex-wrap">
+          <span className="flex items-center">
+            <Shield className="w-4 h-4 mr-1 text-[#10c484]" />
+            Bank-level encryption
+          </span>
+          <span>•</span>
+          <span className="flex items-center">
+            <ShieldCheck className="w-4 h-4 mr-1 text-[#10c484]" />
+            SOC 2 compliant
+          </span>
         </div>
       </div>
 
@@ -77,25 +76,34 @@ export default function Page() {
         }}
       >
         <div className="max-w-lg space-y-6">
-          <h2 className="font-bold text-4xl leading-tight">
+          <h2 className="font-bold text-4xl leading-tight flex items-center justify-center gap-2">
+            <BarChart3 className="w-8 h-8" />
             Take Control of Your Financial Future
           </h2>
           
           <p className="text-xl opacity-95">
-            Track investments, monitor portfolios, and make informed decisions with real-time insights.
+            Track investments <TrendingUp className="inline w-5 h-5" />, 
+            monitor portfolios <BarChart3 className="inline w-5 h-5" />, 
+            and make informed decisions with real-time insights <Zap className="inline w-5 h-5" />.
           </p>
           
           <div className="grid grid-cols-3 gap-6 mt-8">
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-2xl font-bold">24/7</div>
-              <div className="text-sm opacity-90">Market Monitoring</div>
+              <div className="text-2xl font-bold flex items-center justify-center gap-1">
+                <Signal className="w-5 h-5" /> 24/7
+              </div>
+              <div className="text-sm opacity-90">Monitoring</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-2xl font-bold">99.9%</div>
+              <div className="text-2xl font-bold flex items-center justify-center gap-1">
+                <CheckCircle className="w-5 h-5" /> 99.9%
+              </div>
               <div className="text-sm opacity-90">Uptime</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-2xl font-bold">SOC 2</div>
+              <div className="text-2xl font-bold flex items-center justify-center gap-1">
+                <ShieldCheck className="w-5 h-5" /> SOC 2
+              </div>
               <div className="text-sm opacity-90">Compliant</div>
             </div>
           </div>
