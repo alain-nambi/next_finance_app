@@ -38,3 +38,5 @@ bunx shadcn@latest init
 - [x] Add loader if Clerk's page is not ready
 - [x] Make signin design more beautiful
 - [x] Set #10c484 color as main color palette
+- [x] Remove emoji and add icons from lucide-react
+- [x] Update logo for apps
