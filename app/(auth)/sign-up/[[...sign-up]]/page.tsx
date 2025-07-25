@@ -1,13 +1,17 @@
-import { SignUp, ClerkLoaded, ClerkLoading } from '@clerk/nextjs';
-import { 
-  Loader2, 
-  Rocket, 
-  Shield, 
-  BarChart3, 
-  Target, 
-  TrendingUp, 
-  Zap 
+'use client';
+
+import { SignUp, ClerkLoaded, ClerkLoading, useAuth } from '@clerk/nextjs';
+import {
+  Loader2,
+  Rocket,
+  Shield,
+  BarChart3,
+  Target,
+  TrendingUp,
+  Zap
 } from 'lucide-react';
+
+import { useEffect, useState } from 'react';
 
 /**
  * Sign-Up Page Component
@@ -19,12 +23,25 @@ import {
  * - Right: Value proposition panel (desktop only)
  */
 export default function Page() {
+  const { isLoaded } = useAuth();
+  const [showLoader, setShowLoader] = useState(true);
+
+  // Show initial loader for at least 250ms
+  useEffect(() => {
+    if (isLoaded) {
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded]);
+
   return (
     // Main container: Full-height grid layout
     // - Single column on mobile
     // - Two equal columns on large screens (lg:)
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
-      
+
       {/* 
         LEFT SIDE: SIGN-UP FORM 
         - Centered vertically and horizontally
@@ -32,14 +49,14 @@ export default function Page() {
         - Responsive padding (px-4 on mobile, px-8 on large screens)
       */}
       <div className="h-full flex flex-col items-center justify-center px-4 py-12 lg:px-8 bg-white">
-        
+
         {/* 
           WELCOME TEXT SECTION 
           - Contains logo, title, and subtitle
           - Max-width constrained for readability on large screens
         */}
         <div className="text-center space-y-4 max-w-md w-full">
-          
+
           {/* Logo Placeholder */}
           <div className="flex justify-center mb-2">
             {/* 
@@ -52,15 +69,15 @@ export default function Page() {
               <span className="text-white font-bold text-xl">$</span>
             </div>
           </div>
-          
+
           {/* Page Title */}
           <h1 className="font-bold text-3xl text-gray-900 flex items-center justify-center gap-2">
-            Create Your 
+            Create Your
             <span className="text-[#10c484]">FinTrack</span>
             {/* Icon: Target = goal-oriented financial planning */}
             <Target className="w-6 h-6 text-[#10c484]" />
           </h1>
-          
+
           {/* Subtitle */}
           <p className="text-base text-gray-600 flex items-center justify-center gap-2">
             {/* Icon: TrendingUp = growth & finance */}
@@ -75,33 +92,38 @@ export default function Page() {
           - Uses Clerk's SignUp component with custom styling
         */}
         <div className="flex items-center justify-center mt-8 w-full max-w-md">
-          
-          {/* Show form when Clerk is ready */}
-          <ClerkLoaded>
-            <SignUp
-              path="/sign-up"           // URL path for this page
-              routing="path"            // Use Next.js app directory routing
-              signInUrl="/sign-in"      // Link to sign-in page for existing users
-              appearance={{
-                variables: {
-                  colorPrimary: '#10c484',     // Brand green as primary color
-                  colorText: '#1a1a1a',        // Dark text for readability
-                  colorBackground: '#ffffff',  // White background
-                  fontSize: '14px',            // Standard readable size
-                  borderRadius: '8px',         // Slightly rounded corners
-                },
-                elements: {
-                  // Customize link color in footer (e.g., "Already have an account?")
-                  footerActionLink: 'text-[#10c484] hover:underline',
-                },
-              }}
-            />
-          </ClerkLoaded>
 
-          {/* Loading Spinner */}
-          <ClerkLoading>
-            <Loader2 className="animate-spin w-6 h-6 mx-auto text-[#10c484]" />
-          </ClerkLoading>
+          {/* 
+                      Show loader if:
+                      - Clerk is not yet loaded (from useAuth)
+                      - Or ClerkLoading is active
+                    */}
+          {(showLoader || !isLoaded) ? (
+            <div className="flex flex-col items-center justify-center py-10 space-y-4">
+              <Loader2 className="animate-spin w-6 h-6 text-[#10c484]" />
+              <p className="text-sm text-gray-500">Loading secure session...</p>
+            </div>
+          ) : (
+            <ClerkLoaded>
+              <SignUp
+                path="/sign-up"
+                routing="path"
+                signInUrl="/sign-in"
+                appearance={{
+                  variables: {
+                    colorPrimary: '#10c484',
+                    colorText: '#1a1a1a',
+                    colorBackground: '#ffffff',
+                    fontSize: '14px',
+                    borderRadius: '8px',
+                  },
+                  elements: {
+                    footerActionLink: 'text-[#10c484] hover:underline',
+                  },
+                }}
+              />
+            </ClerkLoaded>
+          )}
         </div>
 
         {/* 
@@ -134,23 +156,23 @@ export default function Page() {
         }}
       >
         <div className="max-w-lg space-y-6">
-          
+
           {/* Hero Headline */}
           <h2 className="font-bold text-4xl leading-tight flex items-center justify-center gap-2">
             <Zap className="w-8 h-8" />
             Start Building Wealth with Confidence
           </h2>
-          
+
           {/* Feature Description */}
           <p className="text-xl opacity-95">
-            Track spending <BarChart3 className="inline w-5 h-5 mx-1" />, 
-            grow your investments <TrendingUp className="inline w-5 h-5 mx-1" />, 
+            Track spending <BarChart3 className="inline w-5 h-5 mx-1" />,
+            grow your investments <TrendingUp className="inline w-5 h-5 mx-1" />,
             and reach your goals — all in one place <Zap className="inline w-5 h-5 mx-1" />.
           </p>
-          
+
           {/* Feature Grid: 3 Key Benefits */}
           <div className="grid grid-cols-3 gap-6 mt-8">
-            
+
             {/* Free Trial Card */}
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-2xl font-bold flex items-center justify-center">
@@ -158,7 +180,7 @@ export default function Page() {
               </div>
               <div className="text-sm opacity-90 mt-1">Free 14-Day Trial</div>
             </div>
-            
+
             {/* Security Card */}
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-2xl font-bold flex items-center justify-center">
@@ -166,7 +188,7 @@ export default function Page() {
               </div>
               <div className="text-sm opacity-90 mt-1">Secure & Encrypted</div>
             </div>
-            
+
             {/* Real-Time Insights Card */}
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-2xl font-bold flex items-center justify-center">

@@ -1,16 +1,20 @@
-import { SignIn, ClerkLoaded, ClerkLoading } from '@clerk/nextjs';
-import { 
-  Loader2, 
-  Shield, 
-  Lock, 
-  Target, 
-  TrendingUp, 
-  BarChart3, 
-  Zap, 
-  Signal, 
-  CheckCircle, 
-  ShieldCheck 
+'use client';
+
+import { SignIn, ClerkLoaded, ClerkLoading, useAuth } from '@clerk/nextjs';
+import {
+  Loader2,
+  Shield,
+  Lock,
+  Target,
+  TrendingUp,
+  BarChart3,
+  Zap,
+  Signal,
+  CheckCircle,
+  ShieldCheck
 } from 'lucide-react';
+
+import { useEffect, useState } from 'react';
 
 /**
  * Sign-In Page Component
@@ -25,12 +29,26 @@ import {
  * The right panel highlights key product benefits to engage returning users.
  */
 export default function Page() {
+  const { isLoaded } = useAuth();
+  const [showLoader, setShowLoader] = useState(true);
+
+  // Show initial loader for at least 250ms
+  useEffect(() => {
+    if (isLoaded) {
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded]);
+
+
   return (
     // Main container: Full-height responsive grid
     // - 1 column on mobile (stacked)
     // - 2 equal columns on large screens (side-by-side)
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
-      
+
       {/* 
         LEFT SIDE: SIGN-IN FORM (Public Area)
         - Centered content with vertical padding
@@ -38,14 +56,14 @@ export default function Page() {
         - Responsive max-width to prevent stretching on wide screens
       */}
       <div className="h-full flex flex-col items-center justify-center px-4 py-12 lg:px-8 bg-white">
-        
+
         {/* 
           BRAND IDENTITY SECTION 
           - Logo and welcome message
           - Max-width constrained for readability
         */}
         <div className="text-center space-y-4 max-w-md w-full">
-          
+
           {/* Logo Badge */}
           <div className="flex justify-center mb-2">
             {/* 
@@ -58,15 +76,15 @@ export default function Page() {
               <span className="text-white font-bold text-xl">$</span>
             </div>
           </div>
-          
+
           {/* Page Title */}
           <h1 className="font-bold text-3xl text-gray-900 flex items-center justify-center gap-2">
-            Welcome to 
+            Welcome to
             <span className="text-[#10c484]">FinTrack</span>
             {/* Icon: Target = goal-focused financial planning */}
             <Target className="w-6 h-6 text-[#10c484]" />
           </h1>
-          
+
           {/* Subtitle */}
           <p className="text-base text-gray-600 flex items-center justify-center gap-2">
             {/* Icon: Lock = security and privacy */}
@@ -81,37 +99,38 @@ export default function Page() {
           - Centered with max width for optimal UX
         */}
         <div className="flex items-center justify-center mt-8 w-full max-w-md">
-          
-          {/* Show actual sign-in form when Clerk is ready */}
-          <ClerkLoaded>
-            <SignIn
-              path="/sign-in"           // Current route
-              routing="path"            // Use app directory routing
-              signUpUrl="/sign-up"      // Link to sign-up for new users
-              appearance={{
-                variables: {
-                  colorPrimary: '#10c484',     // Brand green for buttons and links
-                  colorText: '#1a1a1a',        // Dark text for readability
-                  colorBackground: '#ffffff',  // Clean white background
-                  fontSize: '14px',            // Standard readable font size
-                  borderRadius: '8px',         // Slightly rounded corners for modern look
-                },
-                elements: {
-                  // Customize footer links (e.g., "Don't have an account?")
-                  footerActionLink: 'text-[#10c484] hover:underline',
-                },
-              }}
-            />
-          </ClerkLoaded>
 
           {/* 
-            Loading State 
-            - Shown while Clerk is initializing
-            - Spinner in brand green for consistency
+            Show loader if:
+            - Clerk is not yet loaded (from useAuth)
+            - Or ClerkLoading is active
           */}
-          <ClerkLoading>
-            <Loader2 className="animate-spin w-6 h-6 mx-auto text-[#10c484]" />
-          </ClerkLoading>
+          {(showLoader || !isLoaded) ? (
+            <div className="flex flex-col items-center justify-center py-10 space-y-4">
+              <Loader2 className="animate-spin w-6 h-6 text-[#10c484]" />
+              <p className="text-sm text-gray-500">Loading secure session...</p>
+            </div>
+          ) : (
+            <ClerkLoaded>
+              <SignIn
+                path="/sign-in"
+                routing="path"
+                signUpUrl="/sign-up"
+                appearance={{
+                  variables: {
+                    colorPrimary: '#10c484',
+                    colorText: '#1a1a1a',
+                    colorBackground: '#ffffff',
+                    fontSize: '14px',
+                    borderRadius: '8px',
+                  },
+                  elements: {
+                    footerActionLink: 'text-[#10c484] hover:underline',
+                  },
+                }}
+              />
+            </ClerkLoaded>
+          )}
         </div>
 
         {/* 
@@ -146,23 +165,23 @@ export default function Page() {
         }}
       >
         <div className="max-w-lg space-y-6">
-          
+
           {/* Hero Headline */}
           <h2 className="font-bold text-4xl leading-tight flex items-center justify-center gap-2">
             <BarChart3 className="w-8 h-8" />
             Take Control of Your Financial Future
           </h2>
-          
+
           {/* Feature Highlights */}
           <p className="text-xl opacity-95">
-            Track investments <TrendingUp className="inline w-5 h-5" />, 
-            monitor portfolios <BarChart3 className="inline w-5 h-5" />, 
+            Track investments <TrendingUp className="inline w-5 h-5" />,
+            monitor portfolios <BarChart3 className="inline w-5 h-5" />,
             and make informed decisions with real-time insights <Zap className="inline w-5 h-5" />.
           </p>
-          
+
           {/* Key Features Grid */}
           <div className="grid grid-cols-3 gap-6 mt-8">
-            
+
             {/* 24/7 Monitoring */}
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-2xl font-bold flex items-center justify-center gap-1">
@@ -170,7 +189,7 @@ export default function Page() {
               </div>
               <div className="text-sm opacity-90">Monitoring</div>
             </div>
-            
+
             {/* System Uptime */}
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-2xl font-bold flex items-center justify-center gap-1">
@@ -178,7 +197,7 @@ export default function Page() {
               </div>
               <div className="text-sm opacity-90">Uptime</div>
             </div>
-            
+
             {/* Compliance */}
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-2xl font-bold flex items-center justify-center gap-1">
