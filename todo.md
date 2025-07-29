@@ -40,3 +40,4 @@ bunx shadcn@latest init
 - [x] Set #10c484 color as main color palette
 - [x] Remove emoji and add icons from lucide-react
 - [x] Update logo for apps
+- [x] Implement and use UserButton from Clerk 
