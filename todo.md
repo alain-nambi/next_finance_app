@@ -41,3 +41,7 @@ bunx shadcn@latest init
 - [x] Remove emoji and add icons from lucide-react
 - [x] Update logo for apps
 - [x] Implement and use UserButton from Clerk 
+- [x] Install Hono as dependency
+- [x] Create route.ts for Hono
+- [x] Add [RPC](https://hono.dev/docs/guides/rpc) for Hono for validator with Zod
+- [x] Create a simple route for Hono
